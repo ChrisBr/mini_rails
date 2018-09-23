@@ -1,0 +1,9 @@
+<h1>All blog article</h1>
+<p>
+  <% @articles.each do |article| %>
+    <a href= <%= "show?id=#{article.id}" %>>
+      <%= article.title %>
+    </a>
+    <br />
+  <% end %>
+</p>

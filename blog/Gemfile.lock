@@ -1,0 +1,25 @@
+PATH
+  remote: ../rulers
+  specs:
+    rulers (0.1.0)
+      erubis
+      multi_json
+      rack
+      sqlite3
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    erubis (2.7.0)
+    multi_json (1.13.1)
+    rack (2.0.5)
+    sqlite3 (1.3.13)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rulers!
+
+BUNDLED WITH
+   1.16.4
