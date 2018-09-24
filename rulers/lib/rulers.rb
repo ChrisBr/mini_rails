@@ -4,18 +4,24 @@ require "rulers/routing"
 require "rulers/dependencies"
 require "rulers/controller"
 require "rulers/model/sqlite"
+require "rulers/routing/route_object"
 
 module Rulers
   class Application
+    def route(&block)
+      @route_object ||= Routing::RouteObject.new
+      @route_object.instance_eval(&block)
+    end
+
     def call(env)
-      if env['PATH_INFO'] == '/'
-        return [200, { 'Content-Type' => 'text/html'}, ['Hello from Rulers!']]
-      elsif env['PATH_INFO'] == '/favicon.ico'
-        return [404, { 'Content-Type' => 'text/html'}, []]
-      end
-      klass, action = get_controller_and_action(env)
-      action = klass.action(action)
-      action.call(env)
+      get_rack_app(env).call(env)
+    rescue
+      [404, {}, ["Not found!"]]
+    end
+
+    def get_rack_app(env)
+      raise "No routes" unless @route_object
+      @route_object.check_url env['PATH_INFO']
     end
   end
 end

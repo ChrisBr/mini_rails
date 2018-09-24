@@ -5,10 +5,10 @@ module Rulers
   class Controller
     def initialize(env)
       @env = env
-      @routing_params = {}
     end
 
     def dispatch(action, routing_params = {})
+      @routing_params = routing_params
       send(action)
       render(action) unless response
       st, hd, rs = response.to_a
@@ -33,10 +33,6 @@ module Rulers
 
     def request
       @request ||= Rack::Request.new(env)
-    end
-
-    def params
-      request.params
     end
 
     def response
