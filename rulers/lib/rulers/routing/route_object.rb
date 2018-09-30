@@ -5,6 +5,23 @@ module Rulers
         @rules = []
       end
 
+      def root(*args)
+        options = {}
+        options = args.pop if args[-1].is_a?(Hash)
+        options[:default] ||= {}
+
+        dest = nil
+        dest = args.pop if args.size > 0
+        raise "Too many args!" if args.size > 0
+
+        @rules.push({
+          regexp: Regexp.new("^/$"),
+          vars: [],
+          dest: dest,
+          options: options,
+        })
+      end
+
       def match(url, *args)
         options = {}
         options = args.pop if args[-1].is_a?(Hash)
